@@ -13,6 +13,7 @@ class Level
   COMMISSION_LEVEL = 0.3
   INSURANCE_PART = 0.5
   ASSISTANCE_DAILY_FEE = 100
+  DAILY_DEDUCTIBLE_REDUCTION = 400
 
   DECREASE.fill(0, 0..1)
   DECREASE.fill(0.1, 2..4)
@@ -37,6 +38,7 @@ class Level
       {
         id: @last_id += 1,
         price: price,
+        options: compute_options(rental, days),
         commission: fees_from_price(price, days)
       }
     end
@@ -72,6 +74,12 @@ class Level
       insurance_fee: insurance,
       assistance_fee: assistance,
       drivy_fee: commission - (insurance + assistance)
+    }
+  end
+
+  def compute_options(rental, days)
+    {
+      deductible_reduction: rental['deductible_reduction'] ? (days * DAILY_DEDUCTIBLE_REDUCTION) : 0
     }
   end
 
