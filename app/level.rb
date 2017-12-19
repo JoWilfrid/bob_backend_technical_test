@@ -10,6 +10,10 @@ class Level
   # Constants
   DATA_FILE_PATH = 'data/data.json'
   DECREASE = [] # rubocop:disable Style/MutableConstant
+  COMMISSION_LEVEL = 0.3
+  INSURANCE_PART = 0.5
+  ASSISTANCE_DAILY_FEE = 100
+
   DECREASE.fill(0, 0..1)
   DECREASE.fill(0.1, 2..4)
   DECREASE.fill(0.3, 5..10)
@@ -28,14 +32,12 @@ class Level
 
   def run
     @rentals = @data['rentals'].map do |rental|
-      start_date = parse_date(rental['start_date'])
-      end_date = parse_date(rental['end_date'])
-      days = days_difference_between(start_date, end_date)
-      car = find_car_by_id(@data['cars'], rental['car_id'])
+      days, price = extract_and_compute_data_from(rental)
 
       {
         id: @last_id += 1,
-        price: rental_price(car, days, rental['distance'])
+        price: price,
+        commission: fees_from_price(price, days)
       }
     end
   end
@@ -59,5 +61,27 @@ class Level
     end
 
     duration_price + car['price_per_km'] * distance
+  end
+
+  def fees_from_price(price, days)
+    commission = price * COMMISSION_LEVEL
+    insurance = commission * INSURANCE_PART
+    assistance = ASSISTANCE_DAILY_FEE * days
+
+    {
+      insurance_fee: insurance,
+      assistance_fee: assistance,
+      drivy_fee: commission - (insurance + assistance)
+    }
+  end
+
+  def extract_and_compute_data_from(rental)
+    start_date = parse_date(rental['start_date'])
+    end_date = parse_date(rental['end_date'])
+    days = days_difference_between(start_date, end_date)
+    car = find_car_by_id(@data['cars'], rental['car_id'])
+    price = rental_price(car, days, rental['distance'])
+
+    [days, price]
   end
 end
