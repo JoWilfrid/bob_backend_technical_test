@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require_relative '../app/level'
+
+level = Level.new
+
+level.run
+
+puts level.result.inspect
