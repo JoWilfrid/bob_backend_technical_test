@@ -30,7 +30,9 @@ RSpec.describe Level do
     it 'should meet the expectations' do
       subject.run
 
-      expect(subject.result).to eq expectation
+      json_result = JSON.parse(subject.result.to_json)
+
+      expect(json_result).to eq expectation
     end
   end
 end
