@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../app/level'
+APPLICATION_ROOT = File.expand_path(Dir.pwd, '..')
+$LOAD_PATH.unshift File.expand_path('app', APPLICATION_ROOT)
+
+require 'level'
 
 level = Level.new
 
