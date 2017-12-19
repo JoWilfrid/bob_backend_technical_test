@@ -28,21 +28,21 @@ RSpec.describe DateHelper do
   describe '#days_difference_between' do
     context 'including all days' do
       it 'should compute correctly' do
-        date_1 = Date.new(2017, 1, 1)
-        date_2 = Date.new(2017, 1, 5)
+        start_date = Date.new(2017, 1, 1)
+        end_date = Date.new(2017, 1, 5)
         expected = 5
 
-        expect(subject.days_difference_between(date_1, date_2)).to eq expected
+        expect(subject.days_difference_between(start_date, end_date)).to eq expected
       end
     end
 
     context 'not including all days' do
       it 'should compute correctly' do
-        date_1 = Date.new(2017, 1, 1)
-        date_2 = Date.new(2017, 1, 5)
+        start_date = Date.new(2017, 1, 1)
+        end_date = Date.new(2017, 1, 5)
         expected = 4
 
-        expect(subject.days_difference_between(date_1, date_2, false)).to eq expected
+        expect(subject.days_difference_between(start_date, end_date, false)).to eq expected
       end
     end
   end
