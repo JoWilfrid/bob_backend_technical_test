@@ -1,52 +1,23 @@
 {
-  "rentals": [
+  "rental_modifications": [
     {
       "id": 1,
+      "rental_id": 1,
       "actions": [
         {
           "who": "driver",
           "type": "debit",
-          "amount": 3400
+          "amount": 4900
         },
         {
           "who": "owner",
           "type": "credit",
-          "amount": 2100
+          "amount": 2870
         },
         {
           "who": "insurance",
           "type": "credit",
-          "amount": 450
-        },
-        {
-          "who": "assistance",
-          "type": "credit",
-          "amount": 100
-        },
-        {
-          "who": "drivy",
-          "type": "credit",
-          "amount": 750
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "actions": [
-        {
-          "who": "driver",
-          "type": "debit",
-          "amount": 6800
-        },
-        {
-          "who": "owner",
-          "type": "credit",
-          "amount": 4760
-        },
-        {
-          "who": "insurance",
-          "type": "credit",
-          "amount": 1020
+          "amount": 615
         },
         {
           "who": "assistance",
@@ -56,37 +27,38 @@
         {
           "who": "drivy",
           "type": "credit",
-          "amount": 820
+          "amount": 1215
         }
       ]
     },
     {
-      "id": 3,
+      "id": 2,
+      "rental_id": 3,
       "actions": [
         {
           "who": "driver",
-          "type": "debit",
-          "amount": 32600
+          "type": "credit",
+          "amount": 1400
         },
         {
           "who": "owner",
-          "type": "credit",
-          "amount": 19460
+          "type": "debit",
+          "amount": 700
         },
         {
           "who": "insurance",
-          "type": "credit",
-          "amount": 4170
+          "type": "debit",
+          "amount": 150
         },
         {
           "who": "assistance",
-          "type": "credit",
-          "amount": 1200
+          "type": "debit",
+          "amount": 100
         },
         {
           "who": "drivy",
-          "type": "credit",
-          "amount": 7770
+          "type": "debit",
+          "amount": 450
         }
       ]
     }
