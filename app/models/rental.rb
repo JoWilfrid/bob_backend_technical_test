@@ -13,6 +13,7 @@ class Rental < BaseModel
   # Constants
   DECREASE = [] # rubocop:disable Style/MutableConstant
   ACTORS = %i[driver owner insurance assistance drivy].freeze
+  TYPE_EXCHANGE = { credit: :debit, debit: :credit }.freeze
   COMMISSION_LEVEL = 0.3
   INSURANCE_PART = 0.5
   ASSISTANCE_DAILY_FEE = 100
@@ -37,7 +38,7 @@ class Rental < BaseModel
   end
 
   def car=(value)
-    @car = Car.new(value)
+    @car = ensure_car(value)
   end
 
   def day_duration
@@ -61,7 +62,28 @@ class Rental < BaseModel
     @actions ||= compute_actions
   end
 
+  def compute_actions_differences(rental)
+    original_actions, new_actions = extract_actions(rental)
+
+    original_actions.map do |action|
+      new_action = new_actions.select { |act| act[:who] == action[:who] }.first
+
+      next if new_action.nil?
+
+      diff_action = action.dup
+      diff_amount = new_action[:amount] - action[:amount]
+      diff_action[:amount] = diff_amount.abs
+      diff_action[:type] = TYPE_EXCHANGE[diff_action[:type].to_sym] unless diff_amount == diff_amount.abs
+
+      diff_action
+    end
+  end
+
   protected
+
+  def extract_actions(rental)
+    [actions, rental.actions]
+  end
 
   def compute_options
     { deductible_reduction: compute_deductible_reduction }
@@ -69,6 +91,10 @@ class Rental < BaseModel
 
   def ensure_date(value)
     value.is_a?(Date) ? value : parse_date(value)
+  end
+
+  def ensure_car(value)
+    value.is_a?(Car) ? value : Car.new(value)
   end
 
   def compute_deductible_reduction

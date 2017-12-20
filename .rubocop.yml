@@ -21,7 +21,7 @@ Metrics/LineLength:
 
 Metrics/ClassLength:
   Enabled: true
-  Max: 105
+  Max: 130
 
 Metrics/BlockLength:
   Enabled: false
@@ -36,4 +36,8 @@ Style/Documentation:
   Enabled: false
 
 Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+# Disabling because it causes false positives
+Layout/EmptyLinesAroundArguments:
   Enabled: false
